@@ -3,6 +3,9 @@ import { motion } from "framer-motion"
 import { Canvas } from '@react-three/fiber';
 import Waves from './waves';
 import { Suspense } from 'react';
+import dynamic, { noSSR } from 'next/dynamic';
+
+const DynamicWaves = dynamic(() => import("./waves"), { ssr: false})
 
 
 export default function Home() {
@@ -39,7 +42,7 @@ export default function Home() {
             far: 10000,
             aspect: 1
           }} style={{ position: 'fixed' }}>
-            <Waves />
+            <DynamicWaves />
           </Canvas>
         </Suspense>
         <header className='bg-transparent'>

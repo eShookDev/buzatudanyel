@@ -1,11 +1,8 @@
 import Head from 'next/head'
 import { motion } from "framer-motion"
 import { Canvas } from '@react-three/fiber';
-import Waves from './waves';
 import { Suspense } from 'react';
-import dynamic, { noSSR } from 'next/dynamic';
-
-const DynamicWaves = dynamic(() => import("./waves"), { ssr: false})
+import Waves from '@/components/waves';
 
 
 export default function Home() {
@@ -34,17 +31,15 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className='h-screen w-full relative'>
-        <Suspense fallback={null}>
-          <Canvas camera={{
-            position: [100, 10, 0],
-            fov: 60,
-            near: 1,
-            far: 10000,
-            aspect: 1
-          }} style={{ position: 'fixed' }}>
-            <DynamicWaves />
-          </Canvas>
-        </Suspense>
+        <Canvas camera={{
+          position: [100, 10, 0], 
+          fov: 60, 
+          near: 1, 
+          far: 10000,
+          aspect: 1
+        }} style={{ position: 'fixed'}}>
+          <Waves />
+        </Canvas>
         <header className='bg-transparent'>
           <nav className='fixed w-full mx-auto flex justify-center p-8'>
             <div className='flex gap-x-10'>

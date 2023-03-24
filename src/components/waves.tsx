@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { useLoader, useFrame } from "@react-three/fiber";
 import { useMemo, useCallback, useRef } from "react";
+import { buffer } from "stream/consumers";
 
 
 function Waves() {
@@ -9,16 +10,17 @@ function Waves() {
     const bufferRef = useRef<any>();
     const texture = useLoader(THREE.TextureLoader, './points.png');
 
-
     const width = 400 * (window.innerWidth / window.innerHeight);
-    const distance = 6
     const depth = 400
-    const speed = 3
+
+    const distance = 5
+    const speed = 2
+    const height = 4
 
     const PositionY = useCallback((positionX: any, positionZ: any) => {
         return (
-            Math.cos(positionX / width * Math.PI + time.current * speed) +
-            Math.sin(positionZ / depth * Math.PI + time.current * speed)
+            (Math.cos(positionX / width * Math.PI + time.current * speed) +
+            Math.sin(positionZ / depth * Math.PI + time.current * speed)) * height
         )
     }, [width])
 
@@ -28,7 +30,7 @@ function Waves() {
 
         for (let x = 0; x < width; x += distance) {
             for (let z = 0; z < depth; z += distance) {
-                positions.push(- width / 2 + x, -15, -depth / 2 + z)
+                positions.push(- width / 2 + x, -30, -depth/ 2 + z)
             }
         }
 
@@ -46,7 +48,7 @@ function Waves() {
             for (let z = 0; z < depth; z += distance) {
 
                 let positionX = distance * (x - width / 2);
-                let positionZ = distance * (z - width / 2);
+                let positionZ = distance * (z - depth / 2);
 
                 positions[index + 1] = PositionY(positionX, positionZ);
                 index += 3;
@@ -55,6 +57,8 @@ function Waves() {
 
         bufferRef.current.needsUpdate = true;
     })
+
+    console.log(bufferRef);
 
     return (
         <points>
@@ -72,10 +76,6 @@ function Waves() {
                 map={texture}
                 color={0x00AAFF}
                 size={0.5}
-                sizeAttenuation
-                transparent={false}
-                alphaTest={0.5}
-                opacity={1.0}
             />
         </points>
     )

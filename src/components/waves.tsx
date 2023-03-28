@@ -14,7 +14,7 @@ function Waves() {
 
     const time = useRef(0);
     const positionRef = useRef<any>();
-    const materialRef = useRef<PointsMaterial>();
+    const materialRef = useRef<any>();
     const texture = useLoader(THREE.TextureLoader, './points.png');
 
     const pointSize = 15

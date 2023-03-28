@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion, useCycle } from "framer-motion"
 import { Canvas } from '@react-three/fiber';
 import { Suspense, useEffect, useState } from 'react';
 import Waves from '@/components/waves';

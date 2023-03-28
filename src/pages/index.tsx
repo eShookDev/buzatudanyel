@@ -1,9 +1,12 @@
 import Head from 'next/head'
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import { Canvas } from '@react-three/fiber';
-import { Suspense } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import Waves from '@/components/waves';
 
+interface ITextLoops {
+  texts: string[]
+}
 
 export default function Home() {
 
@@ -22,6 +25,52 @@ export default function Home() {
     show: { opacity: 1, y: 0, transition: { type: "spring" } },
   };
 
+  const TextLoop = (props: ITextLoops) => {
+
+    const [index, setIndex] = useState<number>(0)
+
+    useEffect(() => {
+      setTimeout(() => {
+        setIndex((index + 1) % props.texts.length);
+      }, 3 * 1000);
+    }, [index, setIndex, props.texts]);
+
+    return (
+      <AnimatePresence initial={false}>
+        <motion.span
+          key={index}
+          variants={{
+            enter: {
+              translateY: 20,
+              opacity: 0,
+              height: 0
+            },
+            center: {
+              zIndex: 1,
+              translateY: 0,
+              opacity: 1,
+              height: "auto"
+            },
+            exit: {
+              zIndex: 0,
+              translateY: -20,
+              opacity: 0,
+              height: 0
+            }
+          }}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={{
+            translateY: { type: "spring", stiffness: 1000, damping: 300 },
+            opacity: { duration: 0.3 }
+          }} className="absolute pl-5">
+          {props.texts[index]}
+        </motion.span>
+      </AnimatePresence>
+    )
+  }
+
   return (
     <>
       <Head>
@@ -30,14 +79,11 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className='h-screen w-full relative'>
+      <div className="h-screen w-full relative bg-gradient-to-t from-[#283E51] to-[#0A2342]">
         <Canvas camera={{
-          position: [100, 10, 0], 
-          fov: 60, 
-          near: 1, 
-          far: 10000,
-          aspect: 1
-        }} style={{ position: 'fixed'}}>
+          position: [100, 10, 0],
+          fov: 60
+        }} style={{ position: 'fixed' }}>
           <Waves />
         </Canvas>
         <header className='bg-transparent'>
@@ -49,13 +95,15 @@ export default function Home() {
             </div>
           </nav>
         </header>
-        <main className='fixed w-full flex items-center justify-center h-screen'>
+        <main className='fixed w-full flex flex-col items-center justify-center h-screen'>
           <motion.div
             initial="hidden"
             animate="show"
             variants={container}
           >
-            <motion.h3 variants={fadeDown} className='text-7xl font-bold uppercase tracking-wider'>Danyel <span className='text-[#eb4a4c]'>Buzatu</span></motion.h3>
+            <motion.h3 variants={fadeDown} className='text-7xl font-bold tracking-wider'>Hi,</motion.h3>
+            <motion.h3 variants={fadeDown} className='text-7xl font-bold tracking-wider'>Im Danyel <span className='text-[#eb4a4c]'>Buzatu</span></motion.h3>
+            <motion.h3 variants={fadeDown} className='text-4xl font-bold tracking-wider pt-2'>Creative <TextLoop texts={["React", "React-Native", "NextJS"]} /></motion.h3>
           </motion.div>
         </main>
       </div>

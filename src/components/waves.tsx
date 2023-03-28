@@ -69,9 +69,9 @@ function Waves() {
 
         if (materialRef.current){
             // Standard points sized
-            //materialRef.current.size = ( height / 400) * pointSize * devicePixelRatio
+            materialRef.current.size = ( height / 400) * pointSize * devicePixelRatio
             // Update point sized based on time
-            materialRef.current.size = Math.abs(Math.sin(clock.elapsedTime * 5)) * 0.5 * 0.1;
+            //materialRef.current.size = Math.abs(Math.sin(clock.elapsedTime * 5)) * 0.5 * 0.1;
         }
     })
 

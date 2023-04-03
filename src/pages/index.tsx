@@ -1,12 +1,10 @@
 import Head from 'next/head'
-import { AnimatePresence, motion, useCycle } from "framer-motion"
+import { motion } from "framer-motion"
 import { Canvas } from '@react-three/fiber';
-import { Suspense, useEffect, useState } from 'react';
 import Waves from '@/components/waves';
+import { RubberBand } from '@/animation/RubberBand';
+import { useEffect, useState } from 'react';
 
-interface ITextLoops {
-  texts: string[]
-}
 
 export default function Home() {
 
@@ -21,55 +19,22 @@ export default function Home() {
   }
 
   const fadeDown = {
-    hidden: { opacity: 0, y: -10 },
-    show: { opacity: 1, y: 0, transition: { type: "spring" } },
+    hidden: { opacity: 0, x: -20 },
+    show: { opacity: 1, x: 0, transition: { type: "spring" } },
   };
 
-  const TextLoop = (props: ITextLoops) => {
+  const [clientWindowHeight, setClientWindowHeight] = useState(0);
 
-    const [index, setIndex] = useState<number>(0)
+  const handleScroll = () => {
+    setClientWindowHeight(window.scrollY);
+  };
 
-    useEffect(() => {
-      setTimeout(() => {
-        setIndex((index + 1) % props.texts.length);
-      }, 3 * 1000);
-    }, [index, setIndex, props.texts]);
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  });
 
-    return (
-      <AnimatePresence initial={false}>
-        <motion.span
-          key={index}
-          variants={{
-            enter: {
-              translateY: 20,
-              opacity: 0,
-              height: 0
-            },
-            center: {
-              zIndex: 1,
-              translateY: 0,
-              opacity: 1,
-              height: "auto"
-            },
-            exit: {
-              zIndex: 0,
-              translateY: -20,
-              opacity: 0,
-              height: 0
-            }
-          }}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          transition={{
-            translateY: { type: "spring", stiffness: 1000, damping: 300 },
-            opacity: { duration: 0.3 }
-          }} className="absolute pl-5">
-          {props.texts[index]}
-        </motion.span>
-      </AnimatePresence>
-    )
-  }
+  console.log(clientWindowHeight)
 
   return (
     <>
@@ -79,31 +44,69 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="h-screen w-full relative bg-gradient-to-t from-[#283E51] to-[#0A2342]">
-        <Canvas camera={{
-          position: [100, 10, 0],
-          fov: 60
-        }} style={{ position: 'fixed' }}>
-          <Waves />
-        </Canvas>
-        <header className='bg-transparent'>
-          <nav className='fixed w-full mx-auto flex justify-center p-8'>
-            <div className='flex gap-x-10'>
-              <a href='#' className='font-semibold leading-6 tracking-wider uppercase'>Home</a>
-              <a href='#' className='font-semibold leading-6 tracking-wider uppercase'>Projects</a>
-              <a href='#' className='font-semibold leading-6 tracking-wider uppercase'>Contact</a>
-            </div>
+      <div className="h-screen w-full bg-gradient-to-b from-[#283E51] to-transparent">
+        <header className='fixed w-full mx-auto flex justify-center'>
+          <nav className='flex gap-x-10 mt-16'>
+            <a href='#' className='font-semibold leading-6 tracking-wider uppercase'>Home</a>
+            <a href='#projects' className='font-semibold leading-6 tracking-wider uppercase'>Projects</a>
+            <a href='#' className='font-semibold leading-6 tracking-wider uppercase'>Contact</a>
           </nav>
         </header>
-        <main className='fixed w-full flex flex-col items-center justify-center h-screen'>
+        <Canvas camera={{ position: [0, 10, 100], fov: 60 }}>
+          <Waves />
+        </Canvas>
+        <div className='absolute top-0 h-full container flex justify-center items-center'>
           <motion.div
             initial="hidden"
             animate="show"
             variants={container}
           >
-            <motion.h3 variants={fadeDown} className='text-7xl font-bold tracking-wider'>Hi,</motion.h3>
-            <motion.h3 variants={fadeDown} className='text-7xl font-bold tracking-wider'>Im Danyel <span className='text-[#eb4a4c]'>Buzatu</span></motion.h3>
-            <motion.h3 variants={fadeDown} className='text-4xl font-bold tracking-wider pt-2'>Creative <TextLoop texts={["React", "React-Native", "NextJS"]} /></motion.h3>
+            <motion.span variants={fadeDown} className='text-7xl font-bold tracking-wider flex flex-row'>
+              {"Hi".split("").map((value, index) => (
+                <RubberBand key={index}>{value}</RubberBand>
+              ))}
+            </motion.span>
+            <motion.span variants={fadeDown} className='text-7xl font-bold tracking-wider flex flex-row'>
+              {"Im Danyel".split("").map((value, index) => (
+                <RubberBand key={index}>{value === " " ? "\u00A0" : value}</RubberBand>
+              ))}
+              {"\u00A0"}
+              {"Buzatu".split("").map((value, index) => (
+                <RubberBand key={index}><span className='text-[#eb4a4c]'>{value}</span></RubberBand>
+              ))}
+            </motion.span>
+            <motion.span variants={fadeDown} className='text-7xl font-bold tracking-wider flex flex-row'>
+              {"Creative Developer".split("").map((value, index) => (
+                <RubberBand key={index}>{value === " " ? "\u00A0" : value}</RubberBand>
+              ))}
+            </motion.span>
+          </motion.div>
+        </div>
+        <main className='relative h-full container flex justify-center items-center' id='projects'>
+          <motion.div
+            initial="hidden"
+            animate="show"
+            variants={container}
+          >
+            <motion.span variants={fadeDown} className='text-7xl font-bold tracking-wider flex flex-row'>
+              {"Hi".split("").map((value, index) => (
+                <RubberBand key={index}>{value}</RubberBand>
+              ))}
+            </motion.span>
+            <motion.span variants={fadeDown} className='text-7xl font-bold tracking-wider flex flex-row'>
+              {"Im Danyel".split("").map((value, index) => (
+                <RubberBand key={index}>{value === " " ? "\u00A0" : value}</RubberBand>
+              ))}
+              {"\u00A0"}
+              {"Buzatu".split("").map((value, index) => (
+                <RubberBand key={index}><span className='text-[#eb4a4c]'>{value}</span></RubberBand>
+              ))}
+            </motion.span>
+            <motion.span variants={fadeDown} className='text-7xl font-bold tracking-wider flex flex-row'>
+              {"Creative Developer".split("").map((value, index) => (
+                <RubberBand key={index}>{value === " " ? "\u00A0" : value}</RubberBand>
+              ))}
+            </motion.span>
           </motion.div>
         </main>
       </div>

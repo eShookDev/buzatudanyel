@@ -23,7 +23,7 @@ function Waves() {
     const depth = 400
 
     const distance = 5
-    const speed = 2
+    const speed = 1.7
     const height = 4
 
     const PositionY = useCallback((positionX: any, positionZ: any) => {
@@ -49,7 +49,7 @@ function Waves() {
 
     }, [width]);
 
-    useFrame(({ clock }) => {
+    useFrame(() => {
         if (positionRef.current) {
 
             time.current += 0.01;
@@ -67,11 +67,8 @@ function Waves() {
             positionRef.current.needsUpdate = true;
         }
 
-        if (materialRef.current){
-            // Standard points sized
-            materialRef.current.size = ( height / 400) * pointSize * devicePixelRatio
-            // Update point sized based on time
-            //materialRef.current.size = Math.abs(Math.sin(clock.elapsedTime * 5)) * 0.5 * 0.1;
+        if (materialRef.current) {
+            materialRef.current.size = (height / 400) * pointSize * devicePixelRatio
         }
     })
 

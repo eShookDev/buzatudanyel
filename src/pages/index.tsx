@@ -1,40 +1,23 @@
 import Head from 'next/head'
 import { motion } from "framer-motion"
-import { Canvas } from '@react-three/fiber';
-import Waves from '@/components/waves';
 import { RubberBand } from '@/animation/RubberBand';
-import { useEffect, useState } from 'react';
+import Waves from '@/components/canvas/waves';
+import Image from 'next/image';
+
+import { DynamicIsland, MusicPlayer } from '@/components/dynamicIsland';
+import { useState } from 'react';
+import { DynamicIslandSize } from '@/components/dynamicIsland/DynamicIsland';
 
 
 export default function Home() {
 
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.5
-      }
-    }
-  }
 
   const fadeDown = {
     hidden: { opacity: 0, x: -20 },
     show: { opacity: 1, x: 0, transition: { type: "spring" } },
   };
 
-  const [clientWindowHeight, setClientWindowHeight] = useState(0);
-
-  const handleScroll = () => {
-    setClientWindowHeight(window.scrollY);
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  });
-
-  console.log(clientWindowHeight)
+  const [dynamicState, setDynamicState] = useState<DynamicIslandSize>('compact')
 
   return (
     <>
@@ -44,72 +27,123 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="h-screen w-full bg-gradient-to-b from-[#283E51] to-transparent">
-        <header className='fixed w-full mx-auto flex justify-center'>
-          <nav className='flex gap-x-10 mt-16'>
-            <a href='#' className='font-semibold leading-6 tracking-wider uppercase'>Home</a>
-            <a href='#projects' className='font-semibold leading-6 tracking-wider uppercase'>Projects</a>
-            <a href='#' className='font-semibold leading-6 tracking-wider uppercase'>Contact</a>
-          </nav>
+      <div className="bg-[#191919]  text-white">
+        <header className='fixed inset-x-0 py-10'>
+          <DynamicIsland
+            state={dynamicState}
+            onHover={() => setDynamicState('ultra')}
+            onLeave={() => setDynamicState('compact')}
+          >
+            <MusicPlayer size={dynamicState} />
+          </DynamicIsland>
         </header>
-        <Canvas camera={{ position: [0, 10, 100], fov: 60 }}>
-          <Waves />
-        </Canvas>
-        <div className='absolute top-0 h-full container flex justify-center items-center'>
-          <motion.div
-            initial="hidden"
-            animate="show"
-            variants={container}
-          >
-            <motion.span variants={fadeDown} className='text-7xl font-bold tracking-wider flex flex-row'>
-              {"Hi".split("").map((value, index) => (
-                <RubberBand key={index}>{value}</RubberBand>
-              ))}
-            </motion.span>
-            <motion.span variants={fadeDown} className='text-7xl font-bold tracking-wider flex flex-row'>
-              {"Im Danyel".split("").map((value, index) => (
-                <RubberBand key={index}>{value === " " ? "\u00A0" : value}</RubberBand>
-              ))}
-              {"\u00A0"}
-              {"Buzatu".split("").map((value, index) => (
-                <RubberBand key={index}><span className='text-[#eb4a4c]'>{value}</span></RubberBand>
-              ))}
-            </motion.span>
-            <motion.span variants={fadeDown} className='text-7xl font-bold tracking-wider flex flex-row'>
-              {"Creative Developer".split("").map((value, index) => (
-                <RubberBand key={index}>{value === " " ? "\u00A0" : value}</RubberBand>
-              ))}
-            </motion.span>
-          </motion.div>
-        </div>
-        <main className='relative h-full container flex justify-center items-center' id='projects'>
-          <motion.div
-            initial="hidden"
-            animate="show"
-            variants={container}
-          >
-            <motion.span variants={fadeDown} className='text-7xl font-bold tracking-wider flex flex-row'>
-              {"Hi".split("").map((value, index) => (
-                <RubberBand key={index}>{value}</RubberBand>
-              ))}
-            </motion.span>
-            <motion.span variants={fadeDown} className='text-7xl font-bold tracking-wider flex flex-row'>
-              {"Im Danyel".split("").map((value, index) => (
-                <RubberBand key={index}>{value === " " ? "\u00A0" : value}</RubberBand>
-              ))}
-              {"\u00A0"}
-              {"Buzatu".split("").map((value, index) => (
-                <RubberBand key={index}><span className='text-[#eb4a4c]'>{value}</span></RubberBand>
-              ))}
-            </motion.span>
-            <motion.span variants={fadeDown} className='text-7xl font-bold tracking-wider flex flex-row'>
-              {"Creative Developer".split("").map((value, index) => (
-                <RubberBand key={index}>{value === " " ? "\u00A0" : value}</RubberBand>
-              ))}
-            </motion.span>
-          </motion.div>
+        <main>
+          <section className='grid min-h-screen mx-auto max-w-screen-xl'>
+            <div className='grid grid-cols-12 place-items-center'>
+              <div className='col-span-6'>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1, transition: { type: "spring" } }}
+                  className='flex flex-col gap-y-4'
+                >
+                  <motion.span variants={fadeDown} className='text-7xl font-black flex flex-row'>
+                    {"Hi,".split("").map((value, index) => (
+                      <RubberBand key={index}>{value}</RubberBand>
+                    ))}
+                  </motion.span>
+                  <motion.span variants={fadeDown} className='text-7xl font-black flex flex-row'>
+                    {"I'm Danyel".split("").map((value, index) => (
+                      <RubberBand key={index}>{value === " " ? "\u00A0" : value}</RubberBand>
+                    ))}
+                    {"\u00A0"}
+                    {"Buzatu".split("").map((value, index) => (
+                      <RubberBand key={index}><span className='text-[#eb4a4c]'>{value}</span></RubberBand>
+                    ))}
+                  </motion.span>
+                  <motion.span variants={fadeDown} className='text-7xl font-black flex flex-row'>
+                    {"Freelance Developer".split("").map((value, index) => (
+                      <RubberBand key={index}>{value === " " ? "\u00A0" : value}</RubberBand>
+                    ))}
+                  </motion.span>
+                </motion.div>
+              </div>
+              <div className='col-span-6 order-last'>
+                <div className='flex flex-col'>
+                  <motion.div
+                    animate={{ translateY: ["-20%", "10%"] }}
+                    transition={{ ease: "easeInOut", duration: 10, repeat: Infinity, repeatType: "reverse" }}
+                    className='flex flex-col items-center gap-y-5'>
+                    <motion.a
+                      animate={{ translateX: ["-35%", "100%"] }}
+                      transition={{ ease: "easeInOut", duration: 4, repeat: Infinity, repeatType: "reverse" }}
+                      className="-left-4 flex items-center justify-center bg-[#15131b] border border-[hsla(256,7%,97%,.08)] rounded-full p-7 w-28"
+                      href=""
+                    >
+                      <Image
+                        loading='lazy'
+                        width={128}
+                        height={128}
+                        src={require("../../public/nextjs.png")}
+                        alt='NextJs'
+                        className='h-auto w-full' />
+                      <div className="bg-noisy pointer-events-none absolute inset-0 z-10 rounded-full"></div>
+                    </motion.a>
+                    <motion.a
+                      animate={{ translateX: ["-10%", "100%"] }}
+                      transition={{ ease: "easeInOut", duration: 3, repeat: Infinity, repeatType: "reverse" }}
+                      className="-right-26 flex items-center justify-center bg-[#15131b] border border-[hsla(256,7%,97%,.08)] rounded-full p-7 w-28"
+                      href=""
+                    >
+                      <Image
+                        loading='lazy'
+                        width={128}
+                        height={128}
+                        src={require("../../public/redux.png")}
+                        alt='Redux Toolkit'
+                        className='h-auto w-full' />
+                      <div className="bg-noisy pointer-events-none absolute inset-0 z-10 rounded-full"></div>
+                    </motion.a>
+                    <motion.a
+                      animate={{ translateX: ["-55%", "100%"] }}
+                      transition={{ ease: "easeInOut", duration: 7, repeat: Infinity, repeatType: "reverse" }}
+                      className="-left-16 flex items-center justify-center bg-[#15131b] border border-[hsla(256,7%,97%,.08)] rounded-full p-7 w-28"
+                      href=""
+                    >
+                      <Image
+                        loading='lazy'
+                        width={128}
+                        height={128}
+                        src={require("../../public/react.png")}
+                        alt='React | React-Native'
+                        className='h-auto w-full' />
+                      <div className="bg-noisy pointer-events-none absolute inset-0 z-10 rounded-full"></div>
+                    </motion.a>
+                    <motion.a
+                      animate={{ translateX: ["-40%", "80%"] }}
+                      transition={{ ease: "easeInOut", duration: 8, repeat: Infinity, repeatType: "reverse" }}
+                      className="-left-36 flex items-center justify-center bg-[#15131b] border border-[hsla(256,7%,97%,.08)] rounded-full p-7 w-28"
+                      href=""
+                    >
+                      <Image
+                        loading='lazy'
+                        width={128}
+                        height={128}
+                        src={require("../../public/mongodb.png")}
+                        alt='MongoDb'
+                        className='h-auto w-full' />
+                      <div className="bg-noisy pointer-events-none absolute inset-0 z-10 rounded-full"></div>
+                    </motion.a>
+                  </motion.div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <footer className='grid min-h-screen bg-gradient-to-t from-[#283E51] to-transparent'>
+            <Waves pointSize={15} distance={5} speed={1.7} height={4} />
+        </footer>
         </main>
       </div>
     </>
   )
 }
+

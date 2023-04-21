@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    background-color: black;
-    color: white;
+@import url("./fonts.css");
+
+
+html {
+  font-family: var(--font-walsheim);
 }

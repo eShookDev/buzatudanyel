@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { useLoader, useFrame } from "@react-three/fiber";
+import { useLoader, useFrame, Canvas } from "@react-three/fiber";
 import { useMemo, useCallback, useRef } from "react";
 import { PointsMaterial } from "three";
 
@@ -10,28 +10,28 @@ interface IWave {
     height: number
 }
 
-function Waves() {
+const Scene = (props: IWave) => {
 
     const time = useRef(0);
     const positionRef = useRef<any>();
     const materialRef = useRef<any>();
     const texture = useLoader(THREE.TextureLoader, './points.png');
 
-    const pointSize = 15
+    const pointSize = props.pointSize
 
     const width = 400 * (window.innerWidth / window.innerHeight);
     const depth = 400
 
-    const distance = 5
-    const speed = 1.7
-    const height = 4
+    const distance = props.distance
+    const speed = props.speed
+    const height = props.height
 
     const PositionY = useCallback((positionX: any, positionZ: any) => {
         return (
             (Math.cos(positionX / width * Math.PI + time.current * speed) +
                 Math.sin(positionZ / depth * Math.PI + time.current * speed)) * height
         )
-    }, [width])
+    }, [height, speed, width])
 
     const [positions, colors] = useMemo(() => {
 
@@ -47,7 +47,7 @@ function Waves() {
 
         return [new Float32Array(positions), new Float32Array(colors)];
 
-    }, [width]);
+    }, [distance, width]);
 
     useFrame(() => {
         if (positionRef.current) {
@@ -100,4 +100,17 @@ function Waves() {
     )
 }
 
-export default Waves;
+const Waves = (props: IWave) => {
+    return (
+        <Canvas camera={{ position: [0, 10, 100], fov: 60 }}>
+            <Scene
+                pointSize={props.pointSize}
+                distance={props.distance}
+                speed={props.speed}
+                height={props.height}
+            />
+        </Canvas>
+    )
+}
+
+export default Waves

@@ -1,0 +1,143 @@
+@font-face {
+    font-family: "Walsheim";
+    src: url("../../public/fonts/GT-Walsheim-Pro-Thin.ttf");
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Walsheim";
+    src: url("../../public/fonts/GT-Walsheim-Pro-Thin-Oblique.ttf");
+    font-weight: 100;
+    font-style: oblique;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Walsheim";
+    src: url("../../public/fonts/GT-Walsheim-Pro-Ultra-Light.ttf");
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Walsheim";
+    src: url("../../public/fonts/GT-Walsheim-Pro-Ultra-Light-Oblique.ttf");
+    font-weight: 200;
+    font-style: oblique;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Walsheim";
+    src: url("../../public/fonts/GT-Walsheim-Pro-Light.ttf");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Walsheim";
+    src: url("../../public/fonts/GT-Walsheim-Pro-Light-Oblique.ttf");
+    font-weight: 300;
+    font-style: oblique;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Walsheim";
+    src: url("../../public/fonts/GT-Walsheim-Pro-Regular.ttf");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Walsheim";
+    src: url("../../public/fonts/GT-Walsheim-Pro-Regular-Oblique.ttf");
+    font-weight: 400;
+    font-style: oblique;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Walsheim";
+    src: url("../../public/fonts/GT-Walsheim-Pro-Medium.ttf");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Walsheim";
+    src: url("../../public/fonts/GT-Walsheim-Pro-Medium-Oblique.ttf");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Walsheim";
+    src: url("../../public/fonts/GT-Walsheim-Pro-Bold.ttf");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Walsheim";
+    src: url("../../public/fonts/GT-Walsheim-Pro-Bold-Oblique.ttf");
+    font-weight: 600;
+    font-style: oblique;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Walsheim";
+    src: url("../../public/fonts/GT-Walsheim-Pro-Bold.ttf");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Walsheim";
+    src: url("../../public/fonts/GT-Walsheim-Pro-Bold-Oblique.ttf");
+    font-weight: 700;
+    font-style: oblique;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Walsheim";
+    src: url("../../public/fonts/GT-Walsheim-Pro-Ultra-Bold.ttf");
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Walsheim";
+    src: url("../../public/fonts/GT-Walsheim-Pro-Ultra-Bold-Oblique.ttf");
+    font-weight: 800;
+    font-style: oblique;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Walsheim";
+    src: url("../../public/fonts/GT-Walsheim-Pro-Black.ttf");
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Walsheim";
+    src: url("../../public/fonts/GT-Walsheim-Pro-Black-Oblique.ttf");
+    font-weight: 900;
+    font-style: oblique;
+    font-display: swap;
+}

@@ -22,7 +22,9 @@ export const RubberBand = (props: IAnimation) => {
                 "scale3d(1.05, 0.95, 1)",
                 "scale3d(1, 1, 1)"
             ],
-            transition: [0, .4, .6, .7, .8, .9]
+            transition: {
+                times: [0, .4, .6, .7, .8, .9]
+            }
         })
 
         setIsPlaying(true)

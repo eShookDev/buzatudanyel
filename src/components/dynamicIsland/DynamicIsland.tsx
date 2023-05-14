@@ -1,4 +1,5 @@
 import { AnimatePresence, motion, useWillChange } from "framer-motion"
+import { useCallback, useRef } from "react"
 
 const initialState: keyof typeof DynamicIslandSizePresets = 'default'
 
@@ -50,8 +51,6 @@ const DynamicIslandSizePresets = {
     },
 }
 
-const min = (a: number, b: number) => (a < b ? a : b)
-
 const DynamicIsland = (props: Props) => {
 
     const willChange = useWillChange()
@@ -61,9 +60,9 @@ const DynamicIsland = (props: Props) => {
     } = props
 
     return (
-        <div className='z-20 grid w-full h-full bg-transparent place-items-center'>
-            <motion.button
-                className='items-center justify-center w-0 h-0 mx-auto text-center text-white transition duration-300 ease-in-out bg-black hover:shadow-lg'
+        <div className='z-20 grid w-full h-full place-items-center'>
+            <motion.div
+                className='items-center justify-center w-0 h-0 mx-auto text-center text-white  bg-black hover:shadow-lg DynamicIsland'
                 animate={{
                     width: DynamicIslandSizePresets[state ?? initialState].width,
                     height: DynamicIslandSizePresets[state ?? initialState].aspectRatio * DynamicIslandSizePresets[state ?? initialState].width,
@@ -80,7 +79,7 @@ const DynamicIsland = (props: Props) => {
                 onHoverEnd={props.onLeave}
             >
                 <AnimatePresence>{children}</AnimatePresence>
-            </motion.button>
+            </motion.div>
         </div>
     )
 }

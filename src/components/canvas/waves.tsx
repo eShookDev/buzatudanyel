@@ -1,7 +1,6 @@
 import * as THREE from "three";
 import { useLoader, useFrame, Canvas } from "@react-three/fiber";
 import { useMemo, useCallback, useRef } from "react";
-import { PointsMaterial } from "three";
 
 interface IWave {
     pointSize: number,

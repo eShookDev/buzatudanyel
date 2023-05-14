@@ -2,9 +2,60 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("./fonts.css");
-
-
 html {
-  font-family: var(--font-walsheim);
+  scroll-snap-type: y mandatory;
+}
+
+:root {
+  --gradient: #d499ed, #f47b8f, #fabfb2, #fffad1, #95f3d9, #64b2ff, #8e84ff,
+    #d499ed, #f47b8f;
+}
+
+.GradientProvider {
+  --gradient-size: calc(
+    (100% * (var(--gradient-length) - 1)) / (var(--gradient-interval-size) - 1)
+  );
+  --gradient-animation-duration: 3s;
+  --gradient-percentage: calc(var(--gradient-progress) * 100%);
+  contain: content;
+}
+
+.GradientProvider_Diagonal {
+  background-image: linear-gradient(135deg, var(--gradient));
+  background-position: var(--gradient-percentage) var(--gradient-percentage);
+  background-size: var(--gradient-size) var(--gradient-size);
+}
+
+.GradientProvider_Diagonal {
+  animation-duration: var(--gradient-animation-duration);
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.SectionHello {
+  font-size: calc(var(--font-scale) * (min(1280px, 99vw) - 2 * 38px));
+}
+
+.SideNavigation:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  display: block;
+  background-color: #f0f0f0;
+}
+
+.SideNavigation li:first-child:hover ~ .SideNavigationLine {
+  transform: translateY(0px);
+}
+
+.SideNavigation li:nth-child(2):hover ~ .SideNavigationLine {
+  transform: translateY(48px);
+}
+
+.SideNavigation li:nth-child(3):hover ~ .SideNavigationLine {
+  transform: translateY(96px);
 }

@@ -1,5 +1,4 @@
 import { AnimatePresence, motion, useWillChange } from "framer-motion"
-import { useCallback, useRef } from "react"
 
 const initialState: keyof typeof DynamicIslandSizePresets = 'default'
 
@@ -60,7 +59,7 @@ const DynamicIsland = (props: Props) => {
     } = props
 
     return (
-        <div className='z-20 grid w-full h-full place-items-center'>
+        <div className='grid w-full h-full place-items-center'>
             <motion.div
                 className='items-center justify-center w-0 h-0 mx-auto text-center text-white  bg-black hover:shadow-lg DynamicIsland'
                 animate={{

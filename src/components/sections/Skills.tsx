@@ -8,7 +8,7 @@ const SkillsSection = () => {
 
     return (
         <section className='h-screen flex items-center snap-center' id='section_02'>
-            <div className='container mx-auto'>
+            <div className='container mx-auto px-[var(--outer-gutter)]'>
                 <div className='relative'>
                     <div className='grid grid-cols-12'>
                         <div className='col-span-6'>
@@ -17,21 +17,21 @@ const SkillsSection = () => {
                                 animate={{ opacity: 1, transition: { type: "spring" } }}
                                 className='flex flex-col'
                             >
-                                <motion.span className='text-7xl font-black flex flex-row'>
+                                <motion.span className='text-4xl md:text-7xl font-black text-white flex flex-row'>
                                     {"Skills & ".split("").map((value, index) => (
                                         <RubberBand key={index}>{value === " " ? "\u00A0" : value}</RubberBand>
                                     ))}
                                 </motion.span>
-                                <motion.span className='text-7xl font-black flex flex-row'>
+                                <motion.span className='text-5xl md:text-7xl font-black flex flex-row'>
                                     {"Experiences".split("").map((value, index) => (
                                         <RubberBand key={index}><span className='text-[#eb4a4c]'>{value}</span></RubberBand>
                                     ))}
                                 </motion.span>
                             </motion.div>
                             <div className='mt-7 flex flex-col gap-y-4'>
-                                <p className='text-2xl font-semibold'>The main area of expertise is mobile development with React-Native framework</p>
-                                <p className='text-2xl font-semibold'>HTML, CSS, JS for building small and medium web applications with React</p>
-                                <p className='text-2xl font-semibold'>I also have experience with popular framework like TailwindCSS, Nextjs and others.</p>
+                                <p className='text-2xl font-semibold text-white'>The main area of expertise is mobile development with React-Native framework</p>
+                                <p className='text-2xl font-semibold text-white'>HTML, CSS, JS for building small and medium web applications with React</p>
+                                <p className='text-2xl font-semibold text-white'>I also have experience with popular framework like TailwindCSS, Nextjs and others.</p>
                             </div>
                         </div>
                         <div className='col-span-6 order-last'>

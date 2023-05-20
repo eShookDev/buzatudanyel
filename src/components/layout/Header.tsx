@@ -10,7 +10,11 @@ const Header = (props: Props) => {
         <motion.header
             className={props.className}
         >
-            {props.children}
+            <div className="container mx-auto max-w-screen-xl">
+                <div className="relative">
+                {props.children}
+                </div>
+            </div>
         </motion.header>
     )
 }

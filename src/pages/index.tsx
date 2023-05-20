@@ -5,13 +5,18 @@ import Waves from '@/components/canvas/waves';
 
 import { DynamicIsland, MusicPlayer } from '@/components/dynamicIsland';
 import { DynamicIslandSize } from '@/components/dynamicIsland/DynamicIsland';
-import Header from '@/components/Header';
+import { Header, Aside } from '@/components/layout';
 import { HeroSection, AboutSection, SkillsSection } from '@/components/sections';
+import { useGeolocation } from '@/hooks';
 
 
 export default function Home() {
 
   const [dynamicState, setDynamicState] = React.useState<DynamicIslandSize>('compact');
+
+  const Geolocation = useGeolocation()
+
+  console.log(Geolocation);
 
   return (
     <>
@@ -21,7 +26,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="bg-[#191919] text-white">
+      <div className="min-h-screen overflow-hidden scroll-smooth bg-[#191919]">
         <Header className='fixed inset-x-0 py-10 z-10'>
           <DynamicIsland
             state={dynamicState}
@@ -31,23 +36,8 @@ export default function Home() {
             <MusicPlayer size={dynamicState} />
           </DynamicIsland>
         </Header>
-        <aside className='fixed top-0 right-4 h-screen z-10'>
-          <div className='flex flex-col justify-between items-end mt-10 px-4 h-[calc(100vh_-_6.25rem)]'>
-            <a className='bg-[hsla(256,7%,97%,.11)] rounded-full p-4 text-sm font-medium' href=''>Contact</a>
-            <nav>
-              <ul className='relative SideNavigation'>
-                <li><a href='#section_00' className='block h-12 w-12'>00</a></li>
-                <li><a href='#section_01' className='block h-12 w-12'>01</a></li>
-                <li><a href='#section_02' className='block h-12 w-12'>02</a></li>
-                <div className='h-12 w-2 absolute top-0 right-0 bg-[#f0f0f0] transition-all ease-in-out duration-500 SideNavigationLine'></div>
-              </ul>
-            </nav>
-            <div className='relative flex flex-col items-center max-w-[20px] min-h-[100px]'>
-              <span className='min-w-[100px] -rotate-90 opacity-40'>Scroll Down</span>
-            </div>
-          </div>
-        </aside>
-        <main className='relative'>
+        <Aside />
+        <div className='relative'>
           <HeroSection />
           <AboutSection />
           <SkillsSection />
@@ -61,7 +51,7 @@ export default function Home() {
             </div>
             <Waves pointSize={15} distance={5} speed={1.7} height={4} />
           </footer>
-        </main>
+        </div>
       </div>
     </>
   )

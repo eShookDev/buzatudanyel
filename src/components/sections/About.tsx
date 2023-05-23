@@ -1,13 +1,11 @@
-import { RubberBand } from "@/animation/RubberBand"
 import { motion } from "framer-motion"
-import CodeLineOne from "../svg/CodeLineOne"
-import React from "react"
-import createGlobe from "cobe"
+import { RubberBand } from "@/animation/RubberBand"
+import { CodeLine } from "../svg"
 
 const AboutSection = () => {
 
     return (
-        <section className='h-screen flex items-center snap-center' id='section_01'>
+        <section className='h-screen flex items-center snap-center' id='about'>
             <div className='container mx-auto px-[var(--outer-gutter)]'>
                 <div className='relative'>
                     <div className='grid grid-cols-12'>
@@ -40,7 +38,7 @@ const AboutSection = () => {
                 </div>
             </div>
             <div className='hidden sm:absolute bottom-[43%] right-0 opacity-70 rotate-180 blur'>
-                <CodeLineOne />
+                <CodeLine />
             </div>
         </section>
     )

@@ -4,22 +4,21 @@ import { useEffect, useRef } from "react"
 type Props = React.HTMLAttributes<HTMLDivElement> & {
     width: number,
     height: number,
-    markers: Marker[],
 }
 
 const Globe = (props: Props) => {
 
-    const refCanvas = useRef<any>();
+    const canvasRef = useRef<any>();
 
     useEffect(() => {
 
-        let phi = 0;
+        let currentPhi = 0
 
-        const globe = createGlobe(refCanvas.current, {
+        const globe = createGlobe(canvasRef.current, {
             devicePixelRatio: 2,
-            width: 600 * 2,
-            height: 600 * 2,
-            phi: 0,
+            width: props.width * 2,
+            height: props.height * 2,
+            phi: currentPhi,
             theta: 0,
             dark: 1,
             diffuse: 1.2,
@@ -29,19 +28,23 @@ const Globe = (props: Props) => {
             markerColor: [0.1, 0.8, 1],
             glowColor: [1, 1, 1],
             opacity: .9,
-            markers: props.markers,
+            markers: [{ location: [43.4702359, 11.8525811], size: 0.1 }],
             onRender: (state) => {
-                state.phi = phi;
-                phi += 0.01
+                currentPhi += .01
+                state.phi = currentPhi
             }
         });
 
-        return () => globe.destroy()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+        return () => {
+            globe.destroy()
+        }
+    }, [props.height, props.width])
 
     return (
-        <canvas ref={refCanvas} className={props.className} />
+        <canvas
+            ref={canvasRef}
+            className={props.className}
+        />
     )
 }
 

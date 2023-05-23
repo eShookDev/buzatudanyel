@@ -1,6 +1,6 @@
 import { motion } from "framer-motion"
 
-const CodeLineOne = () => {
+const CodeLine = () => {
     return (
         <>
             <motion.svg width="903" height="887" viewBox="0 0 903 887" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -32,4 +32,4 @@ const CodeLineOne = () => {
     )
 }
 
-export default CodeLineOne
+export default CodeLine

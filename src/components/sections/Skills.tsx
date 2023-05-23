@@ -1,17 +1,16 @@
 import Image from 'next/image';
 import { motion } from "framer-motion"
 import { RubberBand } from "@/animation/RubberBand";
-
-import CodeLineOne from '../svg/CodeLineOne';
+import { CodeLine } from '../svg';
 
 const SkillsSection = () => {
 
     return (
-        <section className='h-screen flex items-center snap-center' id='section_02'>
+        <section className='h-screen flex items-center snap-center' id='skill'>
             <div className='container mx-auto px-[var(--outer-gutter)]'>
                 <div className='relative'>
                     <div className='grid grid-cols-12'>
-                        <div className='col-span-6'>
+                        <div className='col-span-12 sm:col-span-6'>
                             <motion.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1, transition: { type: "spring" } }}
@@ -28,13 +27,11 @@ const SkillsSection = () => {
                                     ))}
                                 </motion.span>
                             </motion.div>
-                            <div className='mt-7 flex flex-col gap-y-4'>
-                                <p className='text-2xl font-semibold text-white'>The main area of expertise is mobile development with React-Native framework</p>
-                                <p className='text-2xl font-semibold text-white'>HTML, CSS, JS for building small and medium web applications with React</p>
-                                <p className='text-2xl font-semibold text-white'>I also have experience with popular framework like TailwindCSS, Nextjs and others.</p>
-                            </div>
+                            <p className="mt-7 leading-6 text-lg tracking-wide sm:max-w-md md:max-w-lg xl:max-w-xl text-[#959499]">
+                                The main area of expertise is mobile development with React-Native framework. HTML, CSS, JS for building small and medium web applications with React. I also have experience with popular framework like TailwindCSS, Nextjs and others.
+                            </p>
                         </div>
-                        <div className='col-span-6 order-last'>
+                        <div className='col-span-12 sm:col-span-6 order-last'>
                             <div className='flex flex-col'>
                                 <motion.div
                                     animate={{ translateY: ["-10%", "20%"] }}
@@ -105,9 +102,6 @@ const SkillsSection = () => {
                         </div>
                     </div>
                 </div>
-            </div>
-            <div className='absolute -left-[25%] bottom-[19%] opacity-70 blur rotate-180'>
-                <CodeLineOne />
             </div>
         </section>
     )

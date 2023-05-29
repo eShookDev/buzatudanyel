@@ -1,6 +1,10 @@
 import { motion } from "framer-motion"
 import { RubberBand } from "@/animation/RubberBand"
 import { CodeLine } from "../svg"
+import dynamic from "next/dynamic"
+
+const FaceLandmarkerCanvas = dynamic(() => { return import("../facelandmarker/FaceLandmarker") }, { ssr: false })
+
 
 const AboutSection = () => {
 
@@ -32,6 +36,7 @@ const AboutSection = () => {
                         </div>
                         <div className='col-span-6'>
                             <div className='relative'>
+                                <FaceLandmarkerCanvas />
                             </div>
                         </div>
                     </div>

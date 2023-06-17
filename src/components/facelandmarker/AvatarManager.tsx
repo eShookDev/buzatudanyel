@@ -1,7 +1,6 @@
 import * as THREE from "three";
 import { FaceLandmarkerResult } from "@mediapipe/tasks-vision";
-import { loadGLTF } from "@/utils/loadGLTF";
-import { decomposeMatrix } from "@/utils/decomposeMatrix";
+import { loadGLTF } from "@/utils/";
 
 class AvatarManager {
     private static instance: AvatarManager = new AvatarManager();
@@ -21,7 +20,7 @@ class AvatarManager {
     loadModel = async (url: string) => {
         const gltf = await loadGLTF(url);
         this.scene.children.length === 1 && this.scene.children[0].removeFromParent();
-        gltf.scene.traverse((obj) => { (obj.frustumCulled = false) });
+        gltf.scene.traverse((obj) => { (obj.frustumCulled = false)});
         this.scene.add(gltf.scene);
     };
 
@@ -32,7 +31,7 @@ class AvatarManager {
         this.updateTranslation(results);
     };
 
-    updateBlendShapes = (results: FaceLandmarkerResult) => {
+    private updateBlendShapes = (results: FaceLandmarkerResult) => {
         if (!results.faceBlendshapes) return;
 
         const blendShapes = results.faceBlendshapes[0]?.categories;
@@ -43,25 +42,23 @@ class AvatarManager {
                 const morphTargetDictionary = obj.morphTargetDictionary as {
                     [key: string]: number;
                 };
-                const morphTargetInfluences =
-                    obj.morphTargetInfluences as Array<number>;
+                const morphTargetInfluences = obj.morphTargetInfluences as Array<number>;
 
                 for (const { score, categoryName } of blendShapes) {
-                    let updatedCategoryName = categoryName;
-                    const index = morphTargetDictionary[updatedCategoryName];
+                    const index = morphTargetDictionary[categoryName];
                     morphTargetInfluences[index] = score;
                 }
             }
         });
     };
 
-    updateTranslation = (results: FaceLandmarkerResult) => {
+    private updateTranslation = (results: FaceLandmarkerResult) => {
         if (!results.facialTransformationMatrixes) return;
 
         const matrixes = results.facialTransformationMatrixes[0]?.data;
         if (!matrixes) return;
 
-        const matrix = new THREE.Matrix4().fromArray(results.facialTransformationMatrixes[0]?.data);
+        const matrix = new THREE.Matrix4().fromArray(matrixes);
         const rotation = new THREE.Euler().setFromRotationMatrix(matrix);
 
         this.scene.getObjectByName("Head")!.rotation.set(rotation.x, rotation.y, rotation.z);

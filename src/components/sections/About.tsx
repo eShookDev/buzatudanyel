@@ -1,51 +1,61 @@
-import { motion } from "framer-motion"
+import { motion, useScroll, useTransform } from "framer-motion"
 import { RubberBand } from "@/animation/RubberBand"
 import { CodeLine } from "../svg"
 import dynamic from "next/dynamic"
+import { useRef } from "react"
 
 const FaceLandmarkerCanvas = dynamic(() => { return import("../facelandmarker/FaceLandmarker") }, { ssr: false })
 
-
 const AboutSection = () => {
 
+    const sectionRef = useRef<HTMLDivElement | null>(null);
+    const { scrollYProgress } = useScroll({
+        target: sectionRef,
+        offset: ["start end", "end start"]
+    })
+
+    const opacity = useTransform(scrollYProgress, [0.2, 0.3], [0, 1]);
+    const x = useTransform(scrollYProgress, [0, 0.4], ["-100%", "0%"]);
+    const y = useTransform(scrollYProgress, [0.2, 0.5], ["0%", "-100%"]);
+
+
     return (
-        <section className='h-screen flex items-center snap-center' id='about'>
+        <motion.section
+            ref={sectionRef}
+            style={{ opacity }}
+            className='flex items-center'>
             <div className='container mx-auto px-[var(--outer-gutter)]'>
                 <div className='relative'>
                     <div className='grid grid-cols-12'>
-                        <div className='col-span-12 md:col-span-6 md:self-center'>
-                            <motion.div
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1, transition: { type: "spring" } }}
-                                className='flex flex-col'
-                            >
-                                <motion.span className='text-4xl md:text-7xl font-black text-white flex flex-row'>
+                        <motion.div className='col-span-12 md:col-span-6 md:self-center' style={{ x, y }}>
+                            <div className='flex flex-col'>
+                                <span className='text-4xl md:text-7xl font-black text-white flex flex-row'>
                                     {"Hello & ".split("").map((value, index) => (
                                         <RubberBand key={index}>{value === " " ? "\u00A0" : value}</RubberBand>
                                     ))}
-                                </motion.span>
-                                <motion.span className='text-5xl md:text-7xl font-black flex flex-row'>
+                                </span>
+                                <span className='text-5xl md:text-7xl font-black flex flex-row'>
                                     {"Danyel Buzatu".split("").map((value, index) => (
                                         <RubberBand key={index}><span className='text-[#eb4a4c]'>{value === " " ? "\u00A0" : value}</span></RubberBand>
                                     ))}
-                                </motion.span>
-                            </motion.div>
+                                </span>
+                            </div>
                             <p className="mt-7 leading-6 text-lg tracking-wide sm:max-w-md md:max-w-lg xl:max-w-xl text-[#959499]">
                                 My name is Buzatu Marius Daniel, passionate mobile & web developer based in Arezzo, Italy. I have developed many types products from well or collaborating with dev agency.
                             </p>
-                        </div>
-                        <div className='col-span-6'>
+                        </motion.div>
+                        <motion.div className='col-span-6'>
                             <div className='relative'>
                                 <FaceLandmarkerCanvas />
                             </div>
-                        </div>
+                        </motion.div>
                     </div>
                 </div>
             </div>
             <div className='hidden sm:absolute bottom-[43%] right-0 opacity-70 rotate-180 blur'>
                 <CodeLine />
             </div>
-        </section>
+        </motion.section>
     )
 }
 

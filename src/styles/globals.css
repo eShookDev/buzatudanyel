@@ -2,11 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
-  --gradient: #d499ed, #f47b8f, #fabfb2, #fffad1, #95f3d9, #64b2ff, #8e84ff, #d499ed, #f47b8f;
+  --gradient: #d499ed, #f47b8f, #fabfb2, #fffad1, #95f3d9, #64b2ff, #8e84ff,
+    #d499ed, #f47b8f;
   --inner-gutter: 16px;
   --outer-gutter: 16px;
+  --colors-secondary: #f47b8f;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 .GradientProvider {

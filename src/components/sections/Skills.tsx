@@ -10,7 +10,7 @@ const SkillsSection = () => {
             <div className='container mx-auto px-[var(--outer-gutter)]'>
                 <div className='relative'>
                     <div className='grid grid-cols-12'>
-                        <div className='col-span-12 sm:col-span-6'>
+                        <div className='col-span-12 sm:col-span-6 md:self-center'>
                             <motion.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1, transition: { type: "spring" } }}

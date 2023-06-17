@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react"
 
 import FaceLandmarkerManager from "./FaceLandmarkerManager";
 import Avatar from "../canvas/avatar";
+import Webcam from "react-webcam";
 
 const FaceLandmarker = () => {
 
@@ -16,8 +17,7 @@ const FaceLandmarker = () => {
         if (videoRef.current && videoRef.current.currentTime !== lastVideoTimeRef.current) {
             lastVideoTimeRef.current = videoRef.current.currentTime;
             try {
-                const faceLandmarker = FaceLandmarkerManager.getInstance()
-                faceLandmarker.detectLandmarks(videoRef.current, Date.now());
+                FaceLandmarkerManager.getInstance().detectLandmarks(videoRef.current, Date.now());
             } catch (e) {
                 console.log(e);
             }
@@ -29,7 +29,7 @@ const FaceLandmarker = () => {
     useEffect(() => {
         const getUserMediaCamera = async () => {
             try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true })
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
                 if (videoRef.current) {
                     videoRef.current.srcObject = stream;
                     videoRef.current.onloadedmetadata = () => {
@@ -44,12 +44,12 @@ const FaceLandmarker = () => {
 
         getUserMediaCamera()
 
-        return () => cancelAnimationFrame(requestAnimatioRef.current);
+        return () => cancelAnimationFrame(requestAnimatioRef.current)
     })
 
     return (
         <>
-            <video ref={videoRef} autoPlay className="hidden"></video>
+            <video ref={videoRef} autoPlay className="-scale-x-100 hidden" />
             <Avatar url={avatarURL} />
         </>
     )

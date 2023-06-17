@@ -11,5 +11,4 @@ const loadGLTF = async (url: string): Promise<GLTF> => {
         );
     });
 };
-
-export { loadGLTF };
+export default loadGLTF;

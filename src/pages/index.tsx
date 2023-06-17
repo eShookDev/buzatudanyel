@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Head from 'next/head'
 
 import { DynamicIsland, MusicPlayer } from '@/components/dynamicIsland';
 import { DynamicIslandSize } from '@/components/dynamicIsland/DynamicIsland';
-import { Header, Aside, Footer } from '@/components/layout';
+import { Header, Footer } from '@/components/layout';
 import { HeroSection, AboutSection, SkillsSection } from '@/components/sections';
 
 
 export default function Home() {
 
-  const [dynamicState, setDynamicState] = React.useState<DynamicIslandSize>('compact');
+  const [dynamicState, setDynamicState] = useState<DynamicIslandSize>('compact');
+
 
   return (
     <>
@@ -19,7 +20,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="min-h-screen overflow-hidden scroll-smooth bg-[#191919]">
+      <div className="min-h-screen overflow-hidden bg-[#191919]">
         <Header className='fixed inset-x-0 py-10 z-10'>
           <DynamicIsland
             state={dynamicState}
@@ -29,7 +30,6 @@ export default function Home() {
             <MusicPlayer size={dynamicState} />
           </DynamicIsland>
         </Header>
-        <Aside />
         <div className='relative'>
           <HeroSection />
           <AboutSection />

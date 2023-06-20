@@ -1,8 +1,9 @@
+import { useRef } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { RubberBand } from "@/animation/RubberBand"
 import { CodeLine } from "../svg"
+
 import dynamic from "next/dynamic"
-import { useRef } from "react"
 
 const FaceLandmarkerCanvas = dynamic(() => { return import("../facelandmarker/FaceLandmarker") }, { ssr: false })
 
@@ -14,10 +15,10 @@ const AboutSection = () => {
         offset: ["start end", "end start"]
     })
 
-    const opacity = useTransform(scrollYProgress, [0.2, 0.3], [0, 1]);
+    const opacity = useTransform(scrollYProgress, [0.2, 0.3, .5, .6], [0, 1, 1, 0]);
     const x = useTransform(scrollYProgress, [0, 0.4], ["-100%", "0%"]);
-    const y = useTransform(scrollYProgress, [0.2, 0.5], ["0%", "-100%"]);
-
+    const y = useTransform(scrollYProgress, [0, 0.7], ["0%", "-10%"]);
+    const scale = useTransform(scrollYProgress, [0, .4], [0, 1]);
 
     return (
         <motion.section
@@ -27,7 +28,7 @@ const AboutSection = () => {
             <div className='container mx-auto px-[var(--outer-gutter)]'>
                 <div className='relative'>
                     <div className='grid grid-cols-12'>
-                        <motion.div className='col-span-12 md:col-span-6 md:self-center' style={{ x, y }}>
+                        <motion.div className='col-span-12 md:col-span-6 md:self-center' style={{ x, scale }}>
                             <div className='flex flex-col'>
                                 <span className='text-4xl md:text-7xl font-black text-white flex flex-row'>
                                     {"Hello & ".split("").map((value, index) => (
@@ -44,7 +45,7 @@ const AboutSection = () => {
                                 My name is Buzatu Marius Daniel, passionate mobile & web developer based in Arezzo, Italy. I have developed many types products from well or collaborating with dev agency.
                             </p>
                         </motion.div>
-                        <motion.div className='col-span-6'>
+                        <motion.div className='col-span-6' style={{ y }}>
                             <div className='relative'>
                                 <FaceLandmarkerCanvas />
                             </div>

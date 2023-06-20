@@ -1,36 +1,45 @@
 import Image from 'next/image';
-import { motion } from "framer-motion"
+import { motion, useScroll, useTransform } from "framer-motion"
 import { RubberBand } from "@/animation/RubberBand";
-import { CodeLine } from '../svg';
+import { useRef } from 'react';
 
 const SkillsSection = () => {
 
+    const sectionRef = useRef<HTMLDivElement | null>(null);
+    const { scrollYProgress } = useScroll({
+        target: sectionRef,
+        offset: ["start end", "end start"]
+    })
+
+    const opacity = useTransform(scrollYProgress, [0.2, 0.3], [0, 1]);
+    const x = useTransform(scrollYProgress, [0, 0.4], ["-100%", "0%"]);
+    const scale = useTransform(scrollYProgress, [0, .4], [0, 1]);
+
     return (
-        <section className='h-screen flex items-center snap-center' id='skill'>
+        <motion.section
+        ref={sectionRef}
+        style={{ opacity }}
+        className='flex items-center'>
             <div className='container mx-auto px-[var(--outer-gutter)]'>
                 <div className='relative'>
                     <div className='grid grid-cols-12'>
-                        <div className='col-span-12 sm:col-span-6 md:self-center'>
-                            <motion.div
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1, transition: { type: "spring" } }}
-                                className='flex flex-col'
-                            >
-                                <motion.span className='text-4xl md:text-7xl font-black text-white flex flex-row'>
+                        <motion.div className='col-span-12 md:col-span-6 md:self-center' style={{ x, scale }}>
+                            <div className='flex flex-col'>
+                                <span className='text-4xl md:text-7xl font-black text-white flex flex-row'>
                                     {"Skills & ".split("").map((value, index) => (
                                         <RubberBand key={index}>{value === " " ? "\u00A0" : value}</RubberBand>
                                     ))}
-                                </motion.span>
-                                <motion.span className='text-5xl md:text-7xl font-black flex flex-row'>
+                                </span>
+                                <span className='text-5xl md:text-7xl font-black flex flex-row'>
                                     {"Experiences".split("").map((value, index) => (
                                         <RubberBand key={index}><span className='text-[#eb4a4c]'>{value}</span></RubberBand>
                                     ))}
-                                </motion.span>
-                            </motion.div>
+                                </span>
+                                </div>
                             <p className="mt-7 leading-6 text-lg tracking-wide sm:max-w-md md:max-w-lg xl:max-w-xl text-[#959499]">
                                 The main area of expertise is mobile development with React-Native framework. HTML, CSS, JS for building small and medium web applications with React. I also have experience with popular framework like TailwindCSS, Nextjs and others.
                             </p>
-                        </div>
+                        </motion.div>
                         <div className='col-span-12 sm:col-span-6 order-last'>
                             <div className='flex flex-col'>
                                 <motion.div
@@ -103,7 +112,7 @@ const SkillsSection = () => {
                     </div>
                 </div>
             </div>
-        </section>
+        </motion.section>
     )
 }
 

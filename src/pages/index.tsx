@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Head from 'next/head'
 
-import { DynamicIsland, MusicPlayer } from '@/components/dynamicIsland';
+import { DynamicIsland } from '@/components/dynamicIsland';
 import { DynamicIslandSize } from '@/components/dynamicIsland/DynamicIsland';
 import { Header, Footer } from '@/components/layout';
 import { HeroSection, AboutSection, SkillsSection } from '@/components/sections';
@@ -10,7 +10,6 @@ import { HeroSection, AboutSection, SkillsSection } from '@/components/sections'
 export default function Home() {
 
   const [dynamicState, setDynamicState] = useState<DynamicIslandSize>('compact');
-
 
   return (
     <>
@@ -24,10 +23,8 @@ export default function Home() {
         <Header className='fixed inset-x-0 py-10 z-10'>
           <DynamicIsland
             state={dynamicState}
-            onHover={() => setDynamicState('ultra')}
-            onLeave={() => setDynamicState('compact')}
           >
-            <MusicPlayer size={dynamicState} />
+              <p className="text-sm text-gray-500 font-sans text-truncate mt-3">Contact: eshookdev@gmail.com</p>
           </DynamicIsland>
         </Header>
         <div className='relative'>
